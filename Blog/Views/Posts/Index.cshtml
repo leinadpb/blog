@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Blog.Models.Post>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@if(ViewBag.NewComment != null)
+{
+    <div class="alert alert-success">@ViewBag.NewComment</div>
+}
+<h2>Showing all post</h2>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>Comments</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @item.Comments.Count
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PostId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PostId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PostId">Delete</a> |
+                <a asp-controller="Posts" asp-action="AddComment" asp-route-postid="@item.PostId" class="btn btn-success btn-sm">Add comment</a> |
+                <a asp-controller="Posts" asp-action="Comments" asp-route-postid="@item.PostId" class="btn btn-info btn-sm">View comments</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
